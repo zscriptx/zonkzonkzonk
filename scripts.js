@@ -33,6 +33,7 @@ const sortSelect = document.querySelector("#sortSelect");
 const toast = document.querySelector("#toast");
 
 const roblox = {
+  proxy: (placeId) => `/api/roblox?placeId=${placeId}`,
   universe: (placeId) => `https://apis.roblox.com/universes/v1/places/${placeId}/universe`,
   details: (universeId) => `https://games.roblox.com/v1/games?universeIds=${universeId}`,
   icon: (universeId) => `https://thumbnails.roblox.com/v1/games/icons?universeIds=${universeId}&size=150x150&format=Png&isCircular=false`,
@@ -52,6 +53,20 @@ function highlightLua(code) {
 
 async function fetchGameInfo(script) {
   try {
+    const proxyResponse = await fetch(roblox.proxy(script.gameId));
+    const contentType = proxyResponse.headers.get("content-type") || "";
+    if (proxyResponse.ok && contentType.includes("application/json")) {
+      return { ...(await proxyResponse.json()), isLoading: false };
+    }
+
+    if ([401, 403].includes(proxyResponse.status) || contentType.includes("text/html")) {
+      console.warn(
+        `The metadata proxy for ${script.gameId} did not return JSON. If this is a Vercel deployment, disable Deployment Protection so /api/roblox is publicly reachable.`,
+      );
+    }
+
+    // Local file previews do not run the Vercel API route, so keep a direct
+    // Roblox API fallback for development while production uses the proxy.
     const universeResponse = await fetch(roblox.universe(script.gameId));
     if (!universeResponse.ok) throw new Error("Universe lookup failed");
     const { universeId } = await universeResponse.json();
