@@ -1,0 +1,14 @@
+{
+  "name": "zonk-roblox-script-showcase",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A responsive Roblox script showcase with live Roblox metadata.",
+  "scripts": {
+    "start": "vercel dev",
+    "check": "node --check scripts.js && node --check api/roblox.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {}
+}
