@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="A modern Roblox script showcase with automatic game metadata, search, sorting, favorites, and copyable Lua scripts." />
+  <title>Roblox Script Showcase</title>
+  <link rel="preconnect" href="https://apis.roblox.com" />
+  <link rel="preconnect" href="https://games.roblox.com" />
+  <link rel="preconnect" href="https://thumbnails.roblox.com" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+
+  <header class="hero">
+    <nav class="nav glass-panel" aria-label="Site summary">
+      <a class="brand" href="#top" aria-label="Roblox Script Showcase home">
+        <span class="brand-mark">Z</span>
+        <span>Zonk Scripts</span>
+      </a>
+      <span class="pill"><strong id="scriptCount">0</strong> scripts available</span>
+    </nav>
+
+    <section class="hero-content" id="top">
+      <p class="eyebrow">Roblox automation library</p>
+      <h1>Professional script cards powered by live Roblox game data.</h1>
+      <p class="hero-copy">Search, sort, favorite, launch, and copy scripts from one responsive glassmorphism dashboard.</p>
+    </section>
+
+    <section class="toolbar glass-panel" aria-label="Script filters">
+      <label class="search-box" for="searchInput">
+        <span aria-hidden="true">⌕</span>
+        <input id="searchInput" type="search" placeholder="Search by game name or Game ID..." autocomplete="off" />
+      </label>
+      <label class="sort-box" for="sortSelect">
+        <span>Sort</span>
+        <select id="sortSelect">
+          <option value="newest">Newest first</option>
+          <option value="az">Game name A-Z</option>
+          <option value="za">Game name Z-A</option>
+        </select>
+      </label>
+    </section>
+  </header>
+
+  <main>
+    <section id="cardsGrid" class="cards-grid" aria-live="polite"></section>
+    <p id="emptyState" class="empty-state glass-panel" hidden>No scripts match your search yet.</p>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite">Script copied to clipboard!</div>
+
+  <footer class="footer glass-panel">
+    <span>Total available scripts: <strong id="footerCount">0</strong></span>
+    <span>Last updated: <strong id="lastUpdated"></strong></span>
+  </footer>
+
+  <script src="scripts.js" defer></script>
+</body>
+</html>
